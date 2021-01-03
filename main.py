@@ -2,7 +2,7 @@ import sys
 from PyQt5 import uic
 from PyQt5.QtGui import QColor, QBrush, QPainter
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton
-from random import randrange
+from random import randint
 
 
 def except_hook(cls, exception, traceback):
@@ -22,18 +22,19 @@ class Example(QWidget):
         self.objects = []
 
     def push(self):
-        r = randrange(1, 100)
-        centre_x = randrange(0, 400)
-        centre_y = randrange(0, 400)
-        self.objects.append((centre_x - r // 2, centre_y - r // 2, r, r))
+        r = randint(1, 100)
+        centre_x = randint(0, 400)
+        centre_y = randint(0, 400)
+        self.objects.append((centre_x - r // 2, centre_y - r // 2, r, r, [randint(0, 255) for i in range(3)]))
         self.update()
 
     def paintEvent(self, event):
         self.painter.begin(self)
-        for obj in self.objects:
-            self.painter.setBrush(QColor('yellow'))
-            self.painter.setPen(QColor('yellow'))
-            self.painter.drawEllipse(obj[0], obj[1], obj[2], obj[3])
+        for i in range(len(self.objects)):
+            colors = [randint(0, 255) for i in range(3)]
+            self.painter.setBrush(QColor(*self.objects[i][4]))
+            self.painter.setPen(QColor(*self.objects[i][4]))
+            self.painter.drawEllipse(self.objects[i][0], self.objects[i][1], self.objects[i][2], self.objects[i][3])
         self.painter.end()
         self.update()
 

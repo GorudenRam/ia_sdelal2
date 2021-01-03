@@ -1,5 +1,6 @@
 import sys
 from PyQt5 import uic
+from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QColor, QBrush, QPainter
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton
 from random import randint
@@ -9,10 +10,27 @@ def except_hook(cls, exception, traceback):
     sys.__excepthook__(cls, exception, traceback)
 
 
-class Example(QWidget):
+class Ui_Form(object):
+    def setupUi(self, Form):
+        Form.setObjectName("Form")
+        Form.resize(393, 293)
+        self.pushButton = QtWidgets.QPushButton(Form)
+        self.pushButton.setGeometry(QtCore.QRect(140, 140, 121, 31))
+        self.pushButton.setObjectName("pushButton")
+
+        self.retranslateUi(Form)
+        QtCore.QMetaObject.connectSlotsByName(Form)
+
+    def retranslateUi(self, Form):
+        _translate = QtCore.QCoreApplication.translate
+        Form.setWindowTitle(_translate("Form", "Form"))
+        self.pushButton.setText(_translate("Form", "Создать окуржность"))
+
+
+class Example(QWidget, Ui_Form):
     def __init__(self):
         super().__init__()
-        uic.loadUi('UI.ui', self)
+        self.setupUi(self)
         self.initUI()
 
     def initUI(self):
